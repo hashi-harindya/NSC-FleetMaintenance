@@ -1,28 +1,21 @@
 import express from "express"
+import mongoose from "mongoose"
+import bodyParser from "body-parser"
 
-let app = express()
+let app = express();
 
-app.get("/",
-    (req, res)=>{
-    console.log("That is a request")
-    res.json(
-        {
-            "message" : "Good morning"+req.body.name
-        })
+app.use (bodyParser.json());
+
+let mongoUrl = "mongodb+srv://NSC:NSCcarrentals123@cluster0.gxsoc.mongodb.net/NSC?retryWrites=true&w=majority&appName=Cluster0";
+
+mongoose.connect(mongoUrl);
+
+let connection = mongoose.connection;
+
+connection.once("open", () => {
+    console.log("MongoDB connection established successfully");
 });
 
-app.post("/",
-    (req, res)=>{
-        console.log("This is a post request")
-    });
-
-app.delete("/",
-    (req, res)=>{
-     console.log("That is a delete request")
- });
-
-
-
-app.listen(3000,()=>{
-    console.log("Server is running on port 3000")
-})
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});
