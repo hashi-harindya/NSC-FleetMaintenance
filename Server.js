@@ -1,6 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import bodyParser from "body-parser"
+import sparePartsInventoryRouter from "./routes/sparePartsInventory.routes.js";
 
 let app = express();
 
@@ -15,6 +16,8 @@ let connection = mongoose.connection;
 connection.once("open", () => {
     console.log("MongoDB connection established successfully");
 });
+
+app.use ("/api/sparePartsInventory", sparePartsInventoryRouter);
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
